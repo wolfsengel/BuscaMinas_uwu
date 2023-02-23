@@ -6,11 +6,22 @@ import java.util.Scanner;
 public class InterfaceConsole {
     BuscaMinas juego = new BuscaMinas();
 
+    /**
+     * Funcion principal inicializadora
+     * @param args No usados
+     */
     public static void main(String[] args) {
+        InterfaceConsole interfaz = new InterfaceConsole();
+        interfaz.juegote(interfaz);
+    }
+
+    /**
+     * Controlador principal del juego
+     * @param interfaz Objeto interfaz con las funciones necesarias para funcionar
+     */
+    public void juegote(InterfaceConsole interfaz){
         Scanner sc = new Scanner(System.in);
         System.out.println("Bienvenido al Buscaminas");
-
-        InterfaceConsole interfaz = new InterfaceConsole();
 
         interfaz.juego.inicializarTablero();
         interfaz.juego.colocarMinas();
@@ -38,6 +49,10 @@ public class InterfaceConsole {
 
         sc.close();
     }
+
+    /**
+     * Funcion encargada de imprimir al usuario el tablero
+     */
     public void imprimirTablero() {
         System.out.println("  | 1 2 3 4 5 6 7 8");
         System.out.println("--|----------------");
@@ -46,15 +61,15 @@ public class InterfaceConsole {
             System.out.print((i + 1) + " | ");
 
             for (int j = 0; j < 8; j++) {
-                if (juego.descubiertas[i][j]) {
-                    if (juego.minas[i][j]) {
+                if (juego.getDescubiertas()[i][j]) {
+                    if (juego.getMinas()[i][j]) {
                         System.out.print("* ");
                     } else {
                         int minasCercanas = juego.contarMinasCercanas(i, j);
                         System.out.print(minasCercanas + " ");
                     }
                 } else {
-                    System.out.print(juego.tablero[i][j] + " ");
+                    System.out.print(juego.getTablero()[i][j] + " ");
                 }
             }
 
@@ -63,10 +78,14 @@ public class InterfaceConsole {
 
         System.out.println();
     }
+
+    /**
+     * En caso de perder mostrar donde estan las minas
+     */
     private void mostrarMinas() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (juego.minas[i][j]) {
+                if (juego.getMinas()[i][j]) {
                     System.out.print("* ");
                 } else {
                     System.out.print(". ");
